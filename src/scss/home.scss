@@ -13,7 +13,7 @@ $space-grey: #cecece;
 .container {
     width: 100vw;
     height: 100vh;
-    background-color: $space-grey;
+    background-color: white;
 }
 
 nav {
@@ -34,7 +34,7 @@ nav {
         cursor: pointer;
         letter-spacing: 0.5px;
         color: $brand-black;
-        
+
         &.active {
             font-weight: bold;
         }
@@ -60,5 +60,52 @@ nav {
         img {
             width: 40px;
         }
+    }
+}
+
+
+table {
+    width: calc(100% - 50px);
+    margin: 0 auto;
+    table-layout: fixed;
+    border-spacing: 0px;
+
+    th {
+        font-weight: 500;
+        height: 50px;
+        border: 1px solid dimgrey;
+    }
+
+    td {
+        height: 50px;
+        font-size: 14px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        border: 1px solid dimgrey;
+
+        &:hover {
+            background-color: $space-grey;
+        }
+    }
+}
+
+.filter-bar {
+    display: flex;
+    align-items: stretch;
+    height: 30px;
+    justify-content: space-between;
+    width: 50%;
+    margin: 30px auto 20px 25px;
+
+    input {
+        font-size: 14px;
+        width: 30%;
+        padding: 0 10px;
+    }
+
+    button {
+        width: 100px;
+        cursor: pointer;
     }
 }

@@ -10,7 +10,7 @@
 .container {
   width: 100vw;
   height: 100vh;
-  background-color: #cecece;
+  background-color: white;
 }
 
 nav {
@@ -53,6 +53,47 @@ nav a.active {
 }
 .welcome header img {
   width: 40px;
+}
+
+table {
+  width: calc(100% - 50px);
+  margin: 0 auto;
+  table-layout: fixed;
+  border-spacing: 0px;
+}
+table th {
+  font-weight: 500;
+  height: 50px;
+  border: 1px solid dimgrey;
+}
+table td {
+  height: 50px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: 1px solid dimgrey;
+}
+table td:hover {
+  background-color: #cecece;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: stretch;
+  height: 30px;
+  justify-content: space-between;
+  width: 50%;
+  margin: 30px auto 20px 25px;
+}
+.filter-bar input {
+  font-size: 14px;
+  width: 30%;
+  padding: 0 10px;
+}
+.filter-bar button {
+  width: 100px;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=home.css.map */
