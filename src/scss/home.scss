@@ -77,16 +77,12 @@ table {
     }
 
     td {
+        cursor: pointer;
         height: 50px;
         font-size: 14px;
         text-align: center;
-        cursor: pointer;
         transition: background-color 0.3s;
         border: 1px solid dimgrey;
-
-        &:hover {
-            background-color: $space-grey;
-        }
     }
 }
 
@@ -94,8 +90,6 @@ table {
     display: flex;
     align-items: stretch;
     height: 30px;
-    justify-content: space-between;
-    width: 50%;
     margin: 30px auto 20px 25px;
 
     @media screen and (max-width: 1023px) {
@@ -111,6 +105,7 @@ table {
         padding: 0 10px;
         border-radius: 3px;
         border: 1px solid $brand-black;
+        margin-right: 15px;
 
         @media screen and (max-width: 1023px) {
             width: 100%;
@@ -122,6 +117,7 @@ table {
     button {
         width: 100px;
         cursor: pointer;
+        margin-right: 15px;
 
         @media screen and (max-width: 1023px) {
             width: 40%;
