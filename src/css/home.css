@@ -118,4 +118,34 @@ table td {
   }
 }
 
+.graph {
+  width: 50%;
+  margin: 30px auto;
+  border: 1px solid dimgrey;
+  border-radius: 3px;
+  padding: 15px;
+}
+@media screen and (max-width: 1023px) {
+  .graph {
+    width: calc(100% - 50px);
+  }
+}
+.graph h2 {
+  text-align: center;
+  font-weight: 500;
+}
+.graph .line-graph {
+  margin-top: 20px;
+}
+
+.ct-series {
+  fill: transparent;
+  stroke: blue;
+  stroke-width: 2px;
+}
+
+.ct-grid {
+  stroke: #cecece;
+}
+
 /*# sourceMappingURL=home.css.map */

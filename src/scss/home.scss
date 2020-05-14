@@ -127,3 +127,34 @@ table {
         }
     }
 }
+
+.graph {
+    width: 50%;
+    margin: 30px auto;
+    border: 1px solid dimgrey;
+    border-radius: 3px;
+    padding: 15px;
+
+    @media screen and (max-width: 1023px) {
+        width: calc(100% - 50px);
+    }
+
+    h2 {
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .line-graph {
+        margin-top: 20px;
+    }
+}
+
+.ct-series {
+    fill: transparent;
+    stroke: blue;
+    stroke-width: 2px;
+}
+
+.ct-grid {
+    stroke: $space-grey;
+}

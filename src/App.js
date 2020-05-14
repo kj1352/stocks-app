@@ -3,7 +3,10 @@ import logo from './assets/arrows.svg';
 import './css/home.css';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
+import ChartistGraph from 'react-chartist';
+import axios from 'axios';
 
+// MOCK DATA
 function allCompanies() {
     return [
     	{ "symbol": "A", "name": "Agilent Technologies Inc", "industry": "Health Care" },
@@ -15,7 +18,7 @@ function allCompanies() {
     ];
 }
 
-
+// MOCK DATA
 function companyHistory() {
     return [
         {"timestamp":"2020-03-23T14:00:00.000Z","symbol":"AAPL","name":"Apple Inc.","industry":"Information Technology","open":228.08, "high":228.5,"low":212.61,"close":224.37,"volumes":83134900},
@@ -26,20 +29,85 @@ function companyHistory() {
 }
 
 
+// HTTP Request
+function getCompanyList() {
+    return axios.get('https://jsonplaceholder.typicode.com/todos');
+}
+
+// Line Graph Component
+class LineGraph extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log(this.props);
+    }
+
+    render() {
+        let data = {
+            labels: this.props.labels,
+            series: [
+                this.props.series
+            ]
+        };
+
+        let options = {
+            high: 400,
+            low: 0,
+            responsive: true,
+            axisY: {
+                showGrid: true,
+            },
+            axisX: {
+                showGrid: false,
+            },
+        }
+
+        let type = 'Line';
+
+        return (
+            <div className="graph">
+                <h2> Closing </h2>
+
+                <ChartistGraph className="line-graph" data={data} options={options} type={type} />
+            </div>
+        );
+    }
+}
+
+
+// History Table
 class CompanyDetailsTable extends React.Component {
     constructor(props) {
         super(props);
-
         this.history = companyHistory();
 
-        console.log(this.history);
+        this.labels = this.history.map(history => moment(history.timestamp).format('DD/MM/YYYY'));
+
+        this.series = this.history.map(history => history.close);
+
+        this.state = {
+            searchableDate: null
+        };
+
+        this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleDateFilter = this.handleDateFilter.bind(this);
+    }
+
+    handleDateChange(event) {
+        this.setState({
+            searchableDate: event.target.value
+        });
+    }
+
+    handleDateFilter() {
+        console.log(this.state);
+        // TODO: Do HTTP request here and forceupdate to filter
     }
 
     render() {
         let companyDetailsList = <section>
             <div className="filter-bar">
-                <input placeholder="Search by Symbol" type="date"/>
-                <button> Seach </button>
+                <input placeholder="Search by Symbol" type="date" onChange={this.handleDateChange}/>
+                <button onClick={this.handleDateFilter}> Seach </button>
                 <button> Clear </button>
             </div>
 
@@ -79,6 +147,7 @@ class CompanyDetailsTable extends React.Component {
                     }) }
                 </tbody>
             </table>
+            <LineGraph labels={this.labels} series={this.series} />
         </section>;
 
         return companyDetailsList;
@@ -86,16 +155,25 @@ class CompanyDetailsTable extends React.Component {
 }
 
 
+// Stocks company list table
 class CompanyListTable extends React.Component {
-
     constructor() {
         super();
 
         this.state = {
             symbolSearchText: '',
-            industrySearchText: ''
+            industrySearchText: '',
+            showCompanyDetails: false
         };
 
+        // Change the URL in the getCompanyList() function to get the actual data
+        getCompanyList().then((data) => {
+            console.log(data.data);
+        }, (err) => {
+            console.log(err);
+        });
+
+        // Assign the company data to this.companies after you get the result from http the above promise function
         this.companies = allCompanies();
 
         this.handleSymbolChange = this.handleSymbolChange.bind(this);
@@ -103,10 +181,15 @@ class CompanyListTable extends React.Component {
     }
 
     filterTable() {
+        // TODO: Do HTTP request here and forceupdate to filter
+
+        // Below module is for local search and you need to do http request to get the data from server
         this.companies = allCompanies().map((company) => company).filter((company) => {
             return company.symbol.toString().toLowerCase().includes(this.state.symbolSearchText.toLowerCase()) &&
             company.industry.toString().toLowerCase().includes(this.state.industrySearchText.toLowerCase());
         });
+
+        // Force update once you get the result
         this.forceUpdate();
     }
 
@@ -175,18 +258,18 @@ class CompanyListTable extends React.Component {
             </table>
         </section>;
 
-        // return this.state.showCompanyDetails ? <CompanyDetailsTable company={this.selectedCompany} /> : companyList;
-        return <CompanyDetailsTable />;
+        return this.state.showCompanyDetails ? <CompanyDetailsTable company={this.selectedCompany} /> : companyList;
     }
-
 }
 
+
+// Main App which renders at the beginning
 class App extends React.Component {
     constructor() {
         super();
 
         this.state = {
-            showCompanyList: true
+            showCompanyList: false
         };
     }
 
